@@ -1,18 +1,18 @@
 import logging
+import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 import instaloader
-import os
 from flask import Flask, render_template
+
+# Flask Uygulaması
+app = Flask(__name__)
 
 # Telegram bot tokenınızı buraya yazın
 TOKEN = '7776707741:AAF_ZKRfjt-yGn2fYJVwXfCQZtg95vaAxDA'  # BotFather'dan aldığınız token
 
 # Instagram video ve fotoğraf indirmek için instaloader
 loader = instaloader.Instaloader()
-
-# Flask uygulaması
-app = Flask(__name__)
 
 # Kullanıcıları kaydedeceğimiz dosya
 USER_FILE = 'users.txt'
@@ -42,8 +42,14 @@ def download_instagram_media(url):
 
 # Kullanıcıları kaydedeceğimiz fonksiyon
 def save_user(user_id):
-    with open(USER_FILE, 'a') as file:
-        file.write(f"{user_id}\n")
+    if not os.path.exists(USER_FILE):
+        # Dosya yoksa oluştur
+        with open(USER_FILE, 'w') as file:
+            file.write(f"{user_id}\n")
+    else:
+        # Dosyaya ekle
+        with open(USER_FILE, 'a') as file:
+            file.write(f"{user_id}\n")
 
 # /start komutu
 async def start(update: Update, context: CallbackContext):
@@ -87,17 +93,27 @@ async def list_users(update: Update, context: CallbackContext):
     except FileNotFoundError:
         await update.message.reply_text("Henüz botu kullanan kimse yok.")
 
+# Flask index route
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 def main():
     # Application kullanımı
     application = Application.builder().token(TOKEN).build()
 
     # Komutları bağla
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("users", list_users))  # /users komutunu ekliyoruz
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_instagram_link))
 
     # Botu başlat
-    application.run_polling()
+    application.run_polling(drop_pending_updates=True)  # Bu metot daha verimli bir polling sağlar
 
 if __name__ == '__main__':
+    from threading import Thread
+    # Flask'ı ayrı bir thread'de çalıştırıyoruz
+    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000})
+    flask_thread.start()
+
+    # Telegram botu çalıştır
     main()
