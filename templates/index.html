@@ -518,42 +518,46 @@
       </ul>
     </nav>
 
-    <!-- Home Section -->
-    <section id="home">
-      <h1>İnstagram Media Yükləmə Tətbiqi</h1>
-      <p>Instagram şəkil və video yükləmək üçün linki buraya yapışdırın</p>
-      <form action="/download" method="POST" id="downloadForm">
-        <input
-          type="text"
-          id="url"
-          name="url"
-          placeholder="Instagram Linki Yapışdır"
-          required
-        />
-        <button class="botao" type="submit">
-          <svg
-            width="24px"
-            height="24px"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="mysvg"
-          >
-            <g id="SVGRepo_iconCarrier">
-              <path
-                id="Vector"
-                d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
-                stroke="#f1f1f1"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </g>
-          </svg>
-          <span class="texto">Yüklə</span>
-        </button>
-      </form>
-    </section>
+   <!-- Home Section -->
+<section id="home">
+  <h1>İnstagram Media Yükləmə Tətbiqi</h1>
+  <p>Instagram şəkil və video yükləmək üçün linki buraya yapışdırın</p>
+  <form action="/download" method="POST" id="downloadForm">
+    <input
+      type="text"
+      id="url"
+      name="url"
+      placeholder="Instagram Linki Yapışdır"
+      required
+    />
+    <button class="botao" type="submit">
+      <svg
+        width="24px"
+        height="24px"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="mysvg"
+      >
+        <g id="SVGRepo_iconCarrier">
+          <path
+            id="Vector"
+            d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
+            stroke="#f1f1f1"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </g>
+      </svg>
+      <span class="texto">Yüklə</span>
+    </button>
+  </form>
+  {% if error %}
+  <p style="color: red;">{{ error }}</p>
+  {% endif %}
+</section>
+
 
 
 
