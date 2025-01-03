@@ -3,442 +3,494 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instagram Yükləmə</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Instagram Media Yükləmə Tətbiqi</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link
       rel="icon"
       href="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
       type="image/png"
     />
-<style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #f8f9fa;
-  color: #343a40;
-  transition: all 0.3s ease-in-out;
-}
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+        transition: all 0.3s ease-in-out;
+      }
 
-/* Navbar */
-nav {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  padding: 15px 20px;
-  transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
-  z-index: 1000;
-}
-/* Kaydırıldığında navbar'a eklenen 'scrolled' sınıfı */
-#navbar.scrolled {
-  background-color: transparent; /* Arka plan rengini koyu yap */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
-  backdrop-filter: blur(10px);
-}
-#navbar.scrolled a {
-  color: gray;
-}
-nav ul {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
+      /* Navbar */
+      nav {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        padding: 15px 20px;
+        transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+        z-index: 1000;
+      }
+      /* Kaydırıldığında navbar'a eklenen 'scrolled' sınıfı */
+      #navbar.scrolled {
+        background-color: transparent; /* Arka plan rengini koyu yap */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+        backdrop-filter: blur(10px);
+      }
+      #navbar.scrolled a {
+        color: gray;
+      }
+      nav ul {
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+        align-items: center;
+        gap: 5px;
+      }
 
-nav ul li {
-  margin: 0 20px;
-}
+      nav ul li a {
+        color: #fff;
+        font-size: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-nav ul li a {
-  color: #fff;
-  font-size: 24px; /* İkon boyutunu ayarlayın */
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-  display: flex;
-  gap: 3px;
-  align-items: center;
-  justify-content: center;
-}
+      nav ul li a:hover {
+        color: #f39c12;
+      }
 
-nav ul li a:hover {
-  color: #f39c12;
-}
+      /* Home Section */
+      #home {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: white;
+        flex-direction: column;
+        text-align: center;
+        padding: 0 20px;
+      }
+      #home form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      #home h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
 
-/* Home Section */
-#home {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: white;
-  flex-direction: column;
-  text-align: center;
-  padding: 0 20px;
-}
-#home form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-#home h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
+      #home p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
 
-#home p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
+      #home input {
+        padding: 15px;
+        font-size: 1.1rem;
+        width: 40%;
+        margin-bottom: 20px;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        outline: none;
+        transition: all 0.3s;
+      }
+      #home input::placeholder {
+        text-align: center;
+      }
+      #home input:focus {
+        border-color: #f39c12;
+      }
 
-#home input {
-  padding: 15px;
-  font-size: 1.1rem;
-  width: 40%;
-  margin-bottom: 20px;
-  border-radius: 50px;
-  border: 1px solid #ddd;
-  outline: none;
-  transition: all 0.3s;
-}
-#home input::placeholder {
-  text-align: center;
-}
-#home input:focus {
-  border-color: #f39c12;
-}
-
-#home button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  background-color: #f39c12;
-  color: #fff;
+/* Button */
+.botao {
+  width: 125px;
+  height: 45px;
+  border-radius: 20px;
   border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#home button:hover {
-  background-color: #e67e22;
-}
-
-/* About Section */
-#about {
-  height: 100vh;
-  padding: 80px 20px;
-  background-color: white;
-  text-align: center;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-  position: relative;
-}
-
-#about video {
-  position: absolute;
-  left: 20%;
-  top: 50%;
-  width: 15vw;
-  z-index: -3;
-}
-#about h2 {
-  font-size: 2.8rem;
-  margin-bottom: 20px;
-}
-
-#about p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-/* Detailed Features */
-#about .features {
-  margin-top: 40px;
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-#about .features ul {
-  list-style-type: none;
-}
-
-#about .features li {
-  margin: 10px 0;
-}
-
-#about .features li:before {
-  content: "✔️";
-  margin-right: 10px;
-  color: #28a745;
-}
-
-/* Contact Section */
-#contact {
-  height: 100vh;
-  background-color: #111;
-  color: white;
-  padding: 80px 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#contact h2 {
-  font-size: 2.8rem;
-  margin-bottom: 20px;
-}
-
-#contact form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#contact input,
-#contact textarea {
-  width: 80%;
-  padding: 25px;
-  margin: 10px 0;
-  border-radius: 50px;
-  border: 1px solid #ddd;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s;
-}
-
-#contact input:focus,
-#contact textarea:focus {
-  border-color: #f39c12;
-}
-
-#contact button {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  background-color: #f39c12;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-#contact button:hover {
-  background-color: #e67e22;
-}
-/* SOCIAL */
-#contact .card i {
-  height: 25px;
-}
-
-#contact .card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: 1px 1px rgba(107, 221, 215, 0.37);
+  padding: 5px 10px;
   background: linear-gradient(to right, #6a11cb, #2575fc);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  overflow: hidden;
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 505;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px rgba(59, 190, 230, 0.568));
+  transition: .5s linear;
+}
+
+.botao .mysvg {
+  display: none;
+}
+
+.botao:hover {
+  width: 50px;
   height: 50px;
-  width: 200px;
-  margin: 25px auto;
+  border-radius: 50%;
+  transition: .5s linear;
 }
 
-#contact .card::before,
-#contact .card::after {
+.botao:hover .texto {
+  display: none;
+}
+
+.botao:hover .mysvg {
+  display: inline;
+}
+
+.botao:hover::before {
+  content: '';
   position: absolute;
-  display: flex;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-  transition: 0.25s linear;
-  z-index: 1;
-}
-
-#contact .card::before {
-  content: "";
-  left: 0;
-  justify-content: flex-end;
-  background-color: #4d60b6;
-}
-
-#contact .card::after {
-  content: "";
-  right: 0;
-  justify-content: flex-start;
-  background-color: #4453a6;
-}
-
-#contact .card:hover {
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-}
-
-#contact .card:hover span {
-  opacity: 0;
-  z-index: -3;
-}
-
-#contact .card:hover::before {
-  opacity: 0.5;
-  transform: translateY(-100%);
-}
-
-#contact .card:hover::after {
-  opacity: 0.5;
-  transform: translateY(100%);
-}
-
-#contact .card span {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: -3px;
+  left: -3px;
   width: 100%;
   height: 100%;
-  color: whitesmoke;
-  font-family: "Fira Mono", monospace;
-  font-size: 24px;
-  font-weight: 700;
-  opacity: 1;
-  transition: opacity 0.25s;
-  z-index: 2;
+  border: 3.5px solid transparent;
+  border-top: 3.5px solid greenyellow;
+  border-right: 3.5px solid greenyellow;
+  border-radius: 50%;
+  animation: animateC 2s linear infinite;
 }
 
-#contact .card .social-link {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25%;
-  height: 100%;
-  color: whitesmoke;
-  font-size: 24px;
-  text-decoration: none;
-  transition: 0.25s;
-}
-
-#contact .card .social-link i {
-  text-shadow: 1px 1px rgba(31, 74, 121, 0.7);
-  transform: scale(1);
-}
-
-#contact .card .social-link:hover {
-  background-color: rgba(249, 244, 255, 0.774);
-  animation: bounce_613 0.4s linear;
-}
-
-@keyframes bounce_613 {
-  40% {
-    transform: scale(1.4);
-  }
-
-  60% {
-    transform: scale(0.8);
-  }
-
-  80% {
-    transform: scale(1.2);
+@keyframes animateC {
+  0% {
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: scale(1);
+    transform: rotate(360deg);
   }
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  #home h1 {
-    font-size: 2.5rem;
-  }
+      /* About Section */
+      #about {
+        height: 100vh;
+        padding: 80px 20px;
+        background-color: white;
+        text-align: center;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+      #about h2 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+      }
 
-  #home input,
-  #home button {
-    width: 80%;
-  }
+      #about p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
 
-  #about p {
-    font-size: 1rem;
-  }
+      /* Detailed Features */
+      #about .features {
+        margin-top: 40px;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
 
-  #contact input,
-  #contact textarea {
-    width: 90%;
-  }
-  #navbar {
-    border-radius: 30px;
-    bottom: 5px;
-  }
-  #navbar ul li a {
-    font-size: 15px;
-  }
+      #about .features ul {
+        list-style-type: none;
+      }
 
-  #about video {
-    width: 50vw;
-    transform: rotate(-90deg);
-    left: 25%;
-    margin-bottom: 20px;
-  }
-}
+      #about .features li {
+        margin: 10px 0;
+      }
 
-/* Error Message */
-.alert {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 15px;
-  border-radius: 5px;
-  margin-top: 20px;
-  text-align: center;
-}
+      #about .features li:before {
+        content: "✔️";
+        margin-right: 10px;
+        color: #28a745;
+      }
 
-.alert .close {
-  cursor: pointer;
-  padding: 5px;
-  font-size: 1.5rem;
-  color: #721c24;
-}
+      /* Contact Section */
+      #contact {
+        height: 100vh;
+        background-color: #111;
+        color: white;
+        padding: 80px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
 
-/* Success Message */
-.btn-success {
-  background-color: #28a745;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 50px;
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s;
-}
+      #contact h2 {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+      }
 
-.btn-success:hover {
-  background-color: #218838;
-}
+      #contact form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-</style>
+      #contact input,
+      #contact textarea {
+        width: 80%;
+        padding: 25px;
+        margin: 10px 0;
+        border-radius: 50px;
+        border: 1px solid #ddd;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      #contact input:focus,
+      #contact textarea:focus {
+        border-color: #f39c12;
+      }
+
+      #contact button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        background-color: #f39c12;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      #contact button:hover {
+        background-color: #e67e22;
+      }
+      /* SOCIAL */
+      #contact .card i {
+        height: 25px;
+      }
+
+      #contact .card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        overflow: hidden;
+        height: 50px;
+        width: 200px;
+        margin: 25px auto;
+      }
+
+      #contact .card::before,
+      #contact .card::after {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        transition: 0.25s linear;
+        z-index: 1;
+      }
+
+      #contact .card::before {
+        content: "";
+        left: 0;
+        justify-content: flex-end;
+        background-color: #4d60b6;
+      }
+
+      #contact .card::after {
+        content: "";
+        right: 0;
+        justify-content: flex-start;
+        background-color: #4453a6;
+      }
+
+      #contact .card:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+          0 10px 10px rgba(0, 0, 0, 0.22);
+      }
+
+      #contact .card:hover span {
+        opacity: 0;
+        z-index: -3;
+      }
+
+      #contact .card:hover::before {
+        opacity: 0.5;
+        transform: translateY(-100%);
+      }
+
+      #contact .card:hover::after {
+        opacity: 0.5;
+        transform: translateY(100%);
+      }
+
+      #contact .card span {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        color: whitesmoke;
+        font-size: 24px;
+        font-weight: 700;
+        opacity: 1;
+        transition: opacity 0.25s;
+        z-index: 2;
+      }
+
+      #contact .card .social-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
+        height: 100%;
+        color: whitesmoke;
+        font-size: 24px;
+        text-decoration: none;
+        transition: 0.25s;
+      }
+
+      #contact .card .social-link i {
+        text-shadow: 1px 1px rgba(31, 74, 121, 0.7);
+        transform: scale(1);
+      }
+
+      #contact .card .social-link:hover {
+        background-color: rgba(249, 244, 255, 0.774);
+        animation: bounce_613 0.4s linear;
+      }
+
+      @keyframes bounce_613 {
+        40% {
+          transform: scale(1.4);
+        }
+
+        60% {
+          transform: scale(0.8);
+        }
+
+        80% {
+          transform: scale(1.2);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        #home h1 {
+          font-size: 2.5rem;
+        }
+
+        #home input,
+        #home button {
+          width: 80%;
+        }
+
+        #about p {
+          font-size: 1rem;
+        }
+
+        #contact input,
+        #contact textarea {
+          width: 90%;
+        }
+        #navbar {
+          border-radius: 30px;
+          bottom: 5px;
+        }
+        #navbar ul li a {
+          font-size: 15px;
+        }
+
+        #about video {
+          width: 50vw;
+          transform: rotate(-90deg);
+          left: 25%;
+          top: 5px; 
+          display: block;
+        }
+      }
+
+      /* Error Message */
+      .alert {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .alert .close {
+        cursor: pointer;
+        padding: 5px;
+        font-size: 1.5rem;
+        color: #721c24;
+      }
+
+      /* Success Message */
+      .btn-success {
+        background-color: #28a745;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .btn-success:hover {
+        background-color: #218838;
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
     <nav id="navbar">
       <ul>
-        <li><a href="#home" class="smooth-scroll"><i class="fa fa-fw fa-home"></i>Ana Səhifə</a></li>
-        <li><a href="#about" class="smooth-scroll"><i class="fa fa-fw fa-info"></i>Haqqımızda</a></li>
-        <li><a href="#contact" class="smooth-scroll"><i class="fa fa-fw fa-envelope"></i>Əlaqə</a></li>
+        <li>
+          <a href="#home" class="smooth-scroll"
+            ><i class="fa fa-fw fa-home"></i>Ana Səhifə</a
+          >
+        </li>
+        |
+        <li>
+          <a href="#about" class="smooth-scroll"
+            ><i class="fa fa-fw fa-info"></i>Haqqımızda</a
+          >
+        </li>
+        |
+        <li>
+          <a href="#contact" class="smooth-scroll"
+            ><i class="fa fa-fw fa-envelope"></i>Əlaqə</a
+          >
+        </li>
       </ul>
     </nav>
     <!-- Home Section -->
@@ -453,36 +505,42 @@ nav ul li a:hover {
           placeholder="Instagram Linki Yapışdır"
           required
         />
-        <button type="submit">Yüklə</button>
+        <button class="botao" type="submit">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg"><g id="SVGRepo_bgCarrier" stroke-width="0">
+            </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+               <g id="Interface / Download"> 
+               <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+               </path>
+            </g> </g>
+          </svg>
+          <span class="texto">Download</span>
+        </button>
       </form>
     </section>
 
     <!-- About Section -->
     <section id="about">
-        <div class="details">
-      <h2>Sayt Haqqında</h2>
-      <p>
-        Bu tətbiq, Instagram istifadəçilərinə şəkil və videoları yükləmə imkanı
-        verir. Yalnız yükləmək istədiyiniz postun linkini daxil etmək
-        kifayətdir.
-      </p>
+      <div class="details">
+        <h2>Sayt Haqqında</h2>
+        <p>
+          Bu tətbiq, Instagram istifadəçilərinə şəkil və videoları yükləmə
+          imkanı verir. Yalnız yükləmək istədiyiniz postun linkini daxil etmək
+          kifayətdir.
+        </p>
 
-      <!-- Detailed Features -->
-      <div class="features">
-        <h3>Xüsusiyyətlər:</h3>
-        <ul>
-          <li>Sadə və intuitiv istifadəçi interfeysi</li>
-          <li>
-            Instagram videolarını və şəkillərini yüksək keyfiyyətlə yükləmə
-          </li>
-          <li>Linki daxil edərək birbaşa yükləmə linki əldə etmə</li>
-          <li>Hər cür Instagram postunu dəstəkləyir</li>
-        </ul>
+        <!-- Detailed Features -->
+        <div class="features">
+          <h3>Xüsusiyyətlər:</h3>
+          <ul>
+            <li>Sadə və intuitiv istifadəçi interfeysi</li>
+            <li>
+              Instagram videolarını və şəkillərini yüksək keyfiyyətlə yükləmə
+            </li>
+            <li>Linki daxil edərək birbaşa yükləmə linki əldə etmə</li>
+            <li>Hər cür Instagram postunu dəstəkləyir</li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="photoVideo">
-    <video id="instaVideo" src="./insta.mp4" autoplay muted loop></video>
-</div>
     </section>
 
     <!-- Error Message -->
@@ -514,72 +572,68 @@ nav ul li a:hover {
       </form>
       <div class="card">
         <span>Əlaqə </span>
-        <a class="social-link" href="https://www.linkedin.com/in/farhadsultan">
-            <i class="fa fa-linkedin" style="font-size: 24px;"></i>
+        <a class="social-link" href="https://www.linkedin.com/in/farhadsultan" target="_blank">
+          <i class="fa fa-linkedin" style="font-size: 24px"></i>
         </a>
-
-        <a class="social-link" href="https://instagram.com/ferhad.sultann">
-            <i class="fa fa-instagram" style="font-size: 24px;"></i>
+        |
+        <a class="social-link" href="https://instagram.com/ferhad.sultann" target="_blank">
+          <i class="fa fa-instagram" style="font-size: 24px"></i>
         </a>
-
-        <a class="social-link" href="#">
-            <i class="fa fa-codepen" style="font-size: 24px;"></i>
+        |
+        <a class="social-link" href="https://codepen.io/farhadsultan" target="_blank">
+          <i class="fa fa-codepen" style="font-size: 24px"></i>
         </a>
-
-        <a class="social-link" href="#">
-            <i class="fa fa-whatsapp" style="font-size:24px;"></i>
+        |
+        <a class="social-link" href="https://wa.me/+994555254193?text=Hi%20Farhad%20☺!" target="_blank">
+          <i class="fa fa-whatsapp" style="font-size: 24px"></i>
         </a>
       </div>
     </section>
 
- 
+    <script>
+      // JavaScript for smooth scroll
+      const scrollLinks = document.querySelectorAll(".smooth-scroll");
 
-   <script>
-    // JavaScript for smooth scroll
-const scrollLinks = document.querySelectorAll(".smooth-scroll");
+      scrollLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href").substring(1);
+          const targetElement = document.getElementById(targetId);
 
-scrollLinks.forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    const targetId = this.getAttribute("href").substring(1);
-    const targetElement = document.getElementById(targetId);
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
 
-    targetElement.scrollIntoView({
-      behavior: "smooth",
-    });
-  });
-});
+      // Animate "About" section when it comes into view
+      window.addEventListener("scroll", function () {
+        const aboutSection = document.getElementById("about");
+        const sectionPosition = aboutSection.getBoundingClientRect().top;
 
-// Animate "About" section when it comes into view
-window.addEventListener("scroll", function () {
-  const aboutSection = document.getElementById("about");
-  const sectionPosition = aboutSection.getBoundingClientRect().top;
+        if (sectionPosition < window.innerHeight * 0.75) {
+          aboutSection.style.opacity = 1;
+          aboutSection.style.transform = "translateY(0)";
+        }
 
-  if (sectionPosition < window.innerHeight * 0.75) {
-    aboutSection.style.opacity = 1;
-    aboutSection.style.transform = "translateY(0)";
-  }
+        const contactSection = document.getElementById("contact");
+        const contactPosition = contactSection.getBoundingClientRect().top;
 
-  const contactSection = document.getElementById("contact");
-  const contactPosition = contactSection.getBoundingClientRect().top;
-
-  if (contactPosition < window.innerHeight * 0.75) {
-    contactSection.style.opacity = 1;
-    contactSection.style.transform = "translateY(0)";
-  }
-});
-// Sayfa kaydırıldıkça navbar'a 'scrolled' sınıfı ekle
-window.onscroll = function () {
-  var navbar = document.getElementById("navbar");
-  if (window.pageYOffset > 50) {
-    // 50px'den fazla kaydırıldığında
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
-};
-var video = document.getElementById("instaVideo");
-video.playbackRate = 1.7;  
-   </script>
+        if (contactPosition < window.innerHeight * 0.75) {
+          contactSection.style.opacity = 1;
+          contactSection.style.transform = "translateY(0)";
+        }
+      });
+      // Sayfa kaydırıldıkça navbar'a 'scrolled' sınıfı ekle
+      window.onscroll = function () {
+        var navbar = document.getElementById("navbar");
+        if (window.pageYOffset > 50) {
+          // 50px'den fazla kaydırıldığında
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      };
+    </script>
   </body>
 </html>
