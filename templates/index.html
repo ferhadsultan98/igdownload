@@ -491,31 +491,7 @@
       .btn-success:hover {
         background-color: #218838;
       }
-      /* Rating Modal */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-      }
-      .modal-content {
-        background-color: white;
-        padding: 20px;
-        text-align: center;
-        border-radius: 8px;
-      }
-      #ratingStars {
-        font-size: 24px;
-        cursor: pointer;
-      }
-      .star {
-        margin: 0 5px;
-      }
+     
     </style>
   </head>
   <body>
@@ -579,28 +555,7 @@
       </form>
     </section>
 
-    <!-- Rating Modal (Evaluation Modal) -->
-    <div id="ratingModal" class="modal">
-      <div class="modal-content">
-        <h2>Değerləndirmənizi Edin</h2>
-        <div id="ratingStars">
-          <span class="star" data-value="1">⭐</span>
-          <span class="star" data-value="2">⭐</span>
-          <span class="star" data-value="3">⭐</span>
-          <span class="star" data-value="4">⭐</span>
-          <span class="star" data-value="5">⭐</span>
-        </div>
-        <button id="submitRating">Göndər</button>
-      </div>
-    </div>
 
-    <!-- Warning Modal to be shown if no rating is given -->
-    <div id="warningModal" class="modal">
-      <div class="modal-content">
-        <h2>Zəhmət olmasa bir dəyərləndirmə edin!</h2>
-        <button id="closeWarningModal">Bağla</button>
-      </div>
-    </div>
 
     <!-- About Section -->
     <section id="about">
@@ -753,70 +708,7 @@
         }
       };
 
-      // Rating Modal
-      // Wait for 5 seconds after form submission
-      document
-        .getElementById("downloadForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault(); // Prevents the form from being submitted
-
-          // Simulate download process after 5 seconds
-          setTimeout(function () {
-            showRatingModal(); // Show the rating modal
-          }, 5000);
-        });
-
-      // Show the rating modal
-      function showRatingModal() {
-        document.getElementById("ratingModal").style.display = "flex";
-      }
-
-      // Rating functionality
-      let selectedRating = 0;
-      document.querySelectorAll(".star").forEach(function (star) {
-        star.addEventListener("click", function () {
-          selectedRating = parseInt(star.getAttribute("data-value")); // Get the selected rating value
-          updateStars(); // Update the stars
-        });
-      });
-
-      // Function to update the color of the stars
-      function updateStars() {
-        document.querySelectorAll(".star").forEach(function (star) {
-          if (parseInt(star.getAttribute("data-value")) <= selectedRating) {
-            star.style.color = "gold"; // Change the color of selected stars to gold
-          } else {
-            star.style.color = "gray"; // Change the color of the other stars to gray
-          }
-        });
-      }
-
-      // Hide the modal when the rating is submitted
-      document
-        .getElementById("submitRating")
-        .addEventListener("click", function () {
-          if (selectedRating > 0) {
-            console.log("Rating Submitted:", selectedRating);
-            // You can send the rating to the server or save it locally here
-            document.getElementById("ratingModal").style.display = "none"; // Hide the modal
-          } else {
-            // Show a warning modal if no rating was selected
-            showWarningModal();
-          }
-        });
-
-      // Show the warning modal when no rating is selected
-      function showWarningModal() {
-        document.getElementById("warningModal").style.display = "flex";
-      }
-
-      // Close the warning modal
-      document
-        .getElementById("closeWarningModal")
-        .addEventListener("click", function () {
-          document.getElementById("warningModal").style.display = "none";
-        });
-
+      
 
 
     </script>
