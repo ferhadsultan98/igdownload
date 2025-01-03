@@ -53,14 +53,14 @@ def index():
 def download():
     url = request.form.get('url')
     if url and 'instagram.com' in url:
-        media_type, media_file = download_instagram_media(url)
+        media_type, media_file, media_filename = download_instagram_media(url)  # media_filename ekleniyor
 
         if media_type == "photo":
             # Fotoğrafı indir
-            return send_file(media_file, as_attachment=True, download_name='photo.jpg', mimetype='image/jpeg')
+            return send_file(media_file, as_attachment=True, download_name=media_filename, mimetype='image/jpeg')
         elif media_type == "video":
             # Video'yu indir
-            return send_file(media_file, as_attachment=True, download_name='video.mp4', mimetype='video/mp4')
+            return send_file(media_file, as_attachment=True, download_name=media_filename, mimetype='video/mp4')
         else:
             return render_template('index.html', error="Medya indirilemedi, doğru linki gönderdiğinizden emin olun.")
     else:
