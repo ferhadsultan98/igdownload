@@ -116,72 +116,72 @@
         border-color: #f39c12;
       }
 
-/* Button */
-.botao {
-  width: 125px;
-  height: 45px;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 1px 1px rgba(107, 221, 215, 0.37);
-  padding: 5px 10px;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-weight: 505;
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  filter: drop-shadow(0 0 10px rgba(59, 190, 230, 0.568));
-  transition: .5s linear;
-}
+      /* Button */
+      .botao {
+        width: 125px;
+        height: 45px;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 1px 1px rgba(107, 221, 215, 0.37);
+        padding: 5px 10px;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: #fff;
+        font-family: Roboto, sans-serif;
+        font-weight: 505;
+        font-size: 16px;
+        line-height: 1;
+        cursor: pointer;
+        filter: drop-shadow(0 0 10px rgba(59, 190, 230, 0.568));
+        transition: 0.5s linear;
+      }
 
-.botao .mysvg {
-  display: none;
-}
+      .botao .mysvg {
+        display: none;
+      }
 
-.botao:hover {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  transition: .5s linear;
-}
+      .botao:hover {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        transition: 0.5s linear;
+      }
 
-.botao:hover .texto {
-  display: none;
-}
+      .botao:hover .texto {
+        display: none;
+      }
 
-.botao:hover .mysvg {
-  display: inline;
-}
+      .botao:hover .mysvg {
+        display: inline;
+      }
 
-.botao:hover::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  width: 100%;
-  height: 100%;
-  border: 3.5px solid transparent;
-  border-top: 3.5px solid greenyellow;
-  border-right: 3.5px solid greenyellow;
-  border-radius: 50%;
-  animation: animateC 2s linear infinite;
-}
+      .botao:hover::before {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        width: 100%;
+        height: 100%;
+        border: 3.5px solid transparent;
+        border-top: 3.5px solid greenyellow;
+        border-right: 3.5px solid greenyellow;
+        border-radius: 50%;
+        animation: animateC 2s linear infinite;
+      }
 
-@keyframes animateC {
-  0% {
-    transform: rotate(0deg);
-  }
+      @keyframes animateC {
+        0% {
+          transform: rotate(0deg);
+        }
 
-  100% {
-    transform: rotate(360deg);
-  }
-}
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
       /* About Section */
       #about {
         height: 100vh;
-        padding: 80px 20px;
+        padding: 100px 20px;
         background-color: white;
         text-align: center;
         color: #333;
@@ -192,10 +192,25 @@
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 1s ease, transform 1s ease;
+        position: relative;
+      }
+      #about .phone-mockup {
+        position: absolute;
+        left: 15px;
+        top: 20%;
+        width: 30vw;
+        z-index: -3;
+      }
+      #about .phone-mockup img {
+        width: 100%;
       }
       #about h2 {
-        font-size: 2.8rem;
+        font-size: 3rem;
         margin-bottom: 20px;
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
       }
 
       #about p {
@@ -203,30 +218,35 @@
         max-width: 800px;
         margin: 0 auto;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        color: #555;
+        font-weight: 400;
       }
 
-      /* Detailed Features */
-      #about .features {
+      .features {
         margin-top: 40px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         line-height: 1.8;
+        color: #333;
       }
 
-      #about .features ul {
+      .features ul {
         list-style-type: none;
+        padding: 0;
       }
 
-      #about .features li {
-        margin: 10px 0;
+      .features li {
+        margin: 15px 0;
+        font-weight: 500;
+        color: #555;
       }
 
-      #about .features li:before {
+      .features li:before {
         content: "✔️";
         margin-right: 10px;
         color: #28a745;
+        font-size: 1.5rem;
       }
-
       /* Contact Section */
       #contact {
         height: 100vh;
@@ -261,7 +281,9 @@
         outline: none;
         transition: all 0.3s;
       }
-
+      #contact textarea {
+        resize: none;
+      }
       #contact input:focus,
       #contact textarea:focus {
         border-color: #f39c12;
@@ -382,7 +404,7 @@
         background-color: rgba(249, 244, 255, 0.774);
         animation: bounce_613 0.4s linear;
       }
-
+      
       @keyframes bounce_613 {
         40% {
           transform: scale(1.4);
@@ -427,12 +449,14 @@
           font-size: 15px;
         }
 
-        #about video {
-          width: 50vw;
-          transform: rotate(-90deg);
-          left: 25%;
-          top: 5px; 
-          display: block;
+        #about .phone-mockup {
+          left: 15px;
+          top: 0;
+          width: 55vw;
+          z-index: -3;
+        }
+        #about .details {
+          margin-top: 18vh;
         }
       }
 
@@ -467,6 +491,31 @@
       .btn-success:hover {
         background-color: #218838;
       }
+      /* Rating Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background-color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+      }
+      #ratingStars {
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .star {
+        margin: 0 5px;
+      }
     </style>
   </head>
   <body>
@@ -492,11 +541,12 @@
         </li>
       </ul>
     </nav>
+
     <!-- Home Section -->
     <section id="home">
       <h1>İnstagram Media Yükləmə Tətbiqi</h1>
       <p>Instagram şəkil və video yükləmək üçün linki buraya yapışdırın</p>
-      <form action="/download" method="POST">
+      <form action="/download" method="POST" id="downloadForm">
         <input
           type="text"
           id="url"
@@ -505,20 +555,59 @@
           required
         />
         <button class="botao" type="submit">
-          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mysvg"><g id="SVGRepo_bgCarrier" stroke-width="0">
-            </g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-               <g id="Interface / Download"> 
-               <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-               </path>
-            </g> </g>
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="mysvg"
+          >
+            <g id="SVGRepo_iconCarrier">
+              <path
+                id="Vector"
+                d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
+                stroke="#f1f1f1"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </g>
           </svg>
-          <span class="texto">Download</span>
+          <span class="texto">Yüklə</span>
         </button>
       </form>
     </section>
 
+    <!-- Rating Modal (Evaluation Modal) -->
+    <div id="ratingModal" class="modal">
+      <div class="modal-content">
+        <h2>Değerləndirmənizi Edin</h2>
+        <div id="ratingStars">
+          <span class="star" data-value="1">⭐</span>
+          <span class="star" data-value="2">⭐</span>
+          <span class="star" data-value="3">⭐</span>
+          <span class="star" data-value="4">⭐</span>
+          <span class="star" data-value="5">⭐</span>
+        </div>
+        <button id="submitRating">Göndər</button>
+      </div>
+    </div>
+
+    <!-- Warning Modal to be shown if no rating is given -->
+    <div id="warningModal" class="modal">
+      <div class="modal-content">
+        <h2>Zəhmət olmasa bir dəyərləndirmə edin!</h2>
+        <button id="closeWarningModal">Bağla</button>
+      </div>
+    </div>
+
     <!-- About Section -->
     <section id="about">
+      <!-- Phone Mockup -->
+      <div class="phone-mockup">
+        <img src="./iphone.png" alt="" />
+      </div>
       <div class="details">
         <h2>Sayt Haqqında</h2>
         <p>
@@ -558,32 +647,61 @@
     <!-- Contact Section -->
     <section id="contact">
       <h2>Bizimlə Əlaqə</h2>
-      <form action="contact_submit" method="POST">
-        <input type="text" name="name" placeholder="Adınız" required />
-        <input type="email" name="email" placeholder="E-poçt" required />
+      <form action="contact_submit" id="contactForm">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Adınız"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="E-poçt"
+          required
+        />
         <textarea
           name="message"
-          rows="4"
           placeholder="Mesajınızı yazın"
           required
+          id="message"
         ></textarea>
         <button type="submit">Göndər</button>
       </form>
+
       <div class="card">
         <span>Əlaqə </span>
-        <a class="social-link" href="https://www.linkedin.com/in/farhadsultan" target="_blank">
+        <a
+          class="social-link"
+          href="https://www.linkedin.com/in/farhadsultan"
+          target="_blank"
+        >
           <i class="fa fa-linkedin" style="font-size: 24px"></i>
         </a>
         |
-        <a class="social-link" href="https://instagram.com/ferhad.sultann" target="_blank">
+        <a
+          class="social-link"
+          href="https://instagram.com/ferhad.sultann"
+          target="_blank"
+        >
           <i class="fa fa-instagram" style="font-size: 24px"></i>
         </a>
         |
-        <a class="social-link" href="https://codepen.io/farhadsultan" target="_blank">
+        <a
+          class="social-link"
+          href="https://codepen.io/farhadsultan"
+          target="_blank"
+        >
           <i class="fa fa-codepen" style="font-size: 24px"></i>
         </a>
         |
-        <a class="social-link" href="https://wa.me/+994555254193?text=Hi%20Farhad%20☺!" target="_blank">
+        <a
+          class="social-link"
+          href="https://wa.me/+994555254193?text=Hi%20Farhad%20☺!"
+          target="_blank"
+        >
           <i class="fa fa-whatsapp" style="font-size: 24px"></i>
         </a>
       </div>
@@ -623,16 +741,84 @@
           contactSection.style.transform = "translateY(0)";
         }
       });
-      // Sayfa kaydırıldıkça navbar'a 'scrolled' sınıfı ekle
+
+      // Add 'scrolled' class to the navbar when scrolling the page
       window.onscroll = function () {
         var navbar = document.getElementById("navbar");
         if (window.pageYOffset > 50) {
-          // 50px'den fazla kaydırıldığında
+          // When scrolled more than 50px
           navbar.classList.add("scrolled");
         } else {
           navbar.classList.remove("scrolled");
         }
       };
+
+      // Rating Modal
+      // Wait for 5 seconds after form submission
+      document
+        .getElementById("downloadForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevents the form from being submitted
+
+          // Simulate download process after 5 seconds
+          setTimeout(function () {
+            showRatingModal(); // Show the rating modal
+          }, 5000);
+        });
+
+      // Show the rating modal
+      function showRatingModal() {
+        document.getElementById("ratingModal").style.display = "flex";
+      }
+
+      // Rating functionality
+      let selectedRating = 0;
+      document.querySelectorAll(".star").forEach(function (star) {
+        star.addEventListener("click", function () {
+          selectedRating = parseInt(star.getAttribute("data-value")); // Get the selected rating value
+          updateStars(); // Update the stars
+        });
+      });
+
+      // Function to update the color of the stars
+      function updateStars() {
+        document.querySelectorAll(".star").forEach(function (star) {
+          if (parseInt(star.getAttribute("data-value")) <= selectedRating) {
+            star.style.color = "gold"; // Change the color of selected stars to gold
+          } else {
+            star.style.color = "gray"; // Change the color of the other stars to gray
+          }
+        });
+      }
+
+      // Hide the modal when the rating is submitted
+      document
+        .getElementById("submitRating")
+        .addEventListener("click", function () {
+          if (selectedRating > 0) {
+            console.log("Rating Submitted:", selectedRating);
+            // You can send the rating to the server or save it locally here
+            document.getElementById("ratingModal").style.display = "none"; // Hide the modal
+          } else {
+            // Show a warning modal if no rating was selected
+            showWarningModal();
+          }
+        });
+
+      // Show the warning modal when no rating is selected
+      function showWarningModal() {
+        document.getElementById("warningModal").style.display = "flex";
+      }
+
+      // Close the warning modal
+      document
+        .getElementById("closeWarningModal")
+        .addEventListener("click", function () {
+          document.getElementById("warningModal").style.display = "none";
+        });
+
+
+
     </script>
   </body>
 </html>
