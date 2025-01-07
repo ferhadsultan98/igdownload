@@ -20,6 +20,31 @@
         box-sizing: border-box;
       }
 
+::-webkit-scrollbar {
+  width: 6px;  
+}
+
+
+::-webkit-scrollbar-track {
+  background: #feda4a;  /* En alttaki renk (100%) */
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to top,
+    #9b4dca 0%,   
+    #f58634 50%,  
+    #feda4a 100%  
+  );
+  border-radius: 10px;  
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f58634; 
+}
+
       body {
         font-family: "Roboto", sans-serif;
         background-color: #f8f9fa;
@@ -37,10 +62,10 @@
         transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
         z-index: 1000;
       }
-      /* Kaydırıldığında navbar'a eklenen 'scrolled' sınıfı */
+
       #navbar.scrolled {
-        background-color: transparent; /* Arka plan rengini koyu yap */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge efekti */
+        background-color: transparent; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
         backdrop-filter: blur(10px);
       }
       nav ul {
