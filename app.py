@@ -1,5 +1,4 @@
 import logging
-import os
 import requests
 from flask import Flask, render_template, request, send_file
 import instaloader
@@ -15,31 +14,6 @@ app = Flask(__name__)
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Tekil medya indirme fonksiyonu
-def download_instagram_media(url):
-    try:
-        shortcode = url.split("/")[-2]
-        post = instaloader.Post.from_shortcode(loader.context, shortcode)
-
-        if post.is_video:
-            media_url = post.video_url
-            response = requests.get(media_url)
-            if response.status_code == 200:
-                video_file = BytesIO(response.content)
-                video_file.name = "video.mp4"
-                return "video", video_file
-        else:
-            media_url = post.url
-            response = requests.get(media_url)
-            if response.status_code == 200:
-                image_file = BytesIO(response.content)
-                image_file.name = "photo.jpg"
-                return "photo", image_file
-
-    except Exception as e:
-        logger.error(f"Medya indirilirken hata oluştu: {e}")
-        return None, None
 
 # Albümdeki tüm medya öğelerini indirme fonksiyonu
 def download_instagram_album(url):
