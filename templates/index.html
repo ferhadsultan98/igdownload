@@ -663,6 +663,39 @@
       #scrollTopBtn:focus {
   outline: none; /* Butona tıklandığında dış hatları gizle */
 }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.media-container img, .media-container video {
+  width: 100%;
+  margin-bottom: 10px;
+}
     </style>
   </head>
   <body>
@@ -729,7 +762,28 @@
       <p style="color: red">{{ error }}</p>
       {% endif %}
     </section>
-
+<!-- Albüm Modal -->
+<div id="albumModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Instagram Albümü</h2>
+    <div class="media-container">
+      {% if album_media %}
+        {% for media in album_media %}
+          {% if media.type == "photo" %}
+            <img src="{{ media.url }}" alt="Photo" style="width: 100%; margin-bottom: 10px;">
+          {% elif media.type == "video" %}
+            <video controls style="width: 100%; margin-bottom: 10px;">
+              <source src="{{ media.url }}" type="video/mp4">
+            </video>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <p>Albüm bulunamadı.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
     <!-- About Section -->
     <section id="about" class="about-section">
       <div class="details">
@@ -898,6 +952,29 @@
           behavior: "smooth",
         });
       }
+
+      
+  // Modal açma ve kapama
+  const modal = document.getElementById("albumModal");
+  const closeModal = document.querySelector(".close");
+
+  // Modal aç
+  function openModal() {
+    modal.style.display = "flex";
+  }
+
+  // Modal kapat
+  closeModal.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Dışarı tıklayınca kapat
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
     </script>
   </body>
 </html>
