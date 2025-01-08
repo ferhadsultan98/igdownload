@@ -1,4 +1,5 @@
 import logging
+import os
 import requests
 from flask import Flask, render_template, request, send_file
 import instaloader
@@ -8,31 +9,41 @@ from io import BytesIO
 loader = instaloader.Instaloader()
 
 # Flask uygulaması
-app = Flask(__name__)
+app = Flask(_name_)
 
 # Logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
-# Albümdeki tüm medya öğelerini indirme fonksiyonu
-def download_instagram_album(url):
+# Instagram video veya fotoğraf indirme fonksiyonu
+def download_instagram_media(url):
     try:
-        shortcode = url.split("/")[-2]
+        # URL üzerinden medya (fotoğraf, video) indirme
+        shortcode = url.split("/")[-2]  # URL'den shortcode'u alıyoruz
         post = instaloader.Post.from_shortcode(loader.context, shortcode)
 
-        media_files = []
-        for node in post.get_sidecar_nodes():
-            if node.is_video:
-                media_files.append({"type": "video", "url": node.video_url})
-            else:
-                media_files.append({"type": "photo", "url": node.display_url})
-
-        return media_files
+        # Medya tipi fotoğraf mı, video mu?
+        if post.is_video:
+            media_url = post.video_url
+            # Video indir
+            response = requests.get(media_url)
+            if response.status_code == 200:
+                video_file = BytesIO(response.content)  # Geçici video dosyasını bellek üzerinde oluşturuyoruz
+                video_file.name = "video.mp4"  # Dosya adını belirtiyoruz
+                return "video", video_file
+        else:
+            media_url = post.url
+            # Fotoğraf indir
+            response = requests.get(media_url)
+            if response.status_code == 200:
+                image_file = BytesIO(response.content)  # Geçici fotoğraf dosyasını bellek üzerinde oluşturuyoruz
+                image_file.name = "photo.jpg"  # Dosya adını belirtiyoruz
+                return "photo", image_file
 
     except Exception as e:
-        logger.error(f"Albüm indirilirken hata oluştu: {e}")
-        return None
+        logger.error(f"Medya indirilirken hata oluştu: {e}")
+        return None, None
 
 @app.route('/')
 def index():
@@ -42,22 +53,18 @@ def index():
 def download():
     url = request.form.get('url')
     if url and 'instagram.com' in url:
-        if '/p/' in url:  # Tek gönderi veya albüm URL'si
-            try:
-                album_media = download_instagram_album(url)
+        media_type, media_file = download_instagram_media(url)
 
-                if album_media:
-                    # Albüm modalında göstermek için medya URL'lerini gönder
-                    return render_template('index.html', album_media=album_media)
-                else:
-                    return render_template('index.html', error="Medya indirilemedi, doğru linki gönderdiğinizden emin olun.")
-            except Exception as e:
-                logger.error(f"Hata: {e}")
-                return render_template('index.html', error="Beklenmeyen bir hata oluştu.")
+        if media_type == "photo":
+            # Fotoğrafı indir
+            return send_file(media_file, as_attachment=True, download_name="photo.jpg", mimetype='image/jpeg')
+        elif media_type == "video":
+            # Video'yu indir
+            return send_file(media_file, as_attachment=True, download_name="video.mp4", mimetype='video/mp4')
         else:
-            return render_template('index.html', error="Lütfen geçerli bir Instagram gönderi linki girin.")
+            return render_template('index.html', error="Medya indirilemedi, doğru linki gönderdiğinizden emin olun.")
     else:
         return render_template('index.html', error="Lütfen geçerli bir Instagram linki girin.")
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
