@@ -9,12 +9,12 @@ from io import BytesIO
 loader = instaloader.Instaloader()
 
 # Flask uygulaması
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 # Instagram video veya fotoğraf indirme fonksiyonu
 def download_instagram_media(url):
@@ -66,5 +66,5 @@ def download():
     else:
         return render_template('index.html', error="Lütfen geçerli bir Instagram linki girin.")
 
-if _name_ == '_main_':
+if __name__ == '_main_':
     app.run(debug=True)
