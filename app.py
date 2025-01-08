@@ -30,7 +30,7 @@ def download_instagram_media(url):
             response = requests.get(media_url)
             if response.status_code == 200:
                 video_file = BytesIO(response.content)  # Geçici video dosyasını bellek üzerinde oluşturuyoruz
-                video_file.name = "video.mp4"  # Dosya adını belirtiyoruz
+                video_file.name = f"{shortcode}_video_sltnv.mp4"  # Dosya adını shortcode, video ve 'sltnv' ile belirliyoruz
                 return "video", video_file
         else:
             media_url = post.url
@@ -38,7 +38,7 @@ def download_instagram_media(url):
             response = requests.get(media_url)
             if response.status_code == 200:
                 image_file = BytesIO(response.content)  # Geçici fotoğraf dosyasını bellek üzerinde oluşturuyoruz
-                image_file.name = "photo.jpg"  # Dosya adını belirtiyoruz
+                image_file.name = f"{shortcode}_photo_sltnv.jpg"  # Dosya adını shortcode, fotoğraf ve 'sltnv' ile belirliyoruz
                 return "photo", image_file
 
     except Exception as e:
@@ -57,14 +57,14 @@ def download():
 
         if media_type == "photo":
             # Fotoğrafı indir
-            return send_file(media_file, as_attachment=True, download_name="photo.jpg", mimetype='image/jpeg')
+            return send_file(media_file, as_attachment=True, download_name=media_file.name, mimetype='image/jpeg')
         elif media_type == "video":
             # Video'yu indir
-            return send_file(media_file, as_attachment=True, download_name="video.mp4", mimetype='video/mp4')
+            return send_file(media_file, as_attachment=True, download_name=media_file.name, mimetype='video/mp4')
         else:
             return render_template('index.html', error="Medya indirilemedi, doğru linki gönderdiğinizden emin olun.")
     else:
         return render_template('index.html', error="Lütfen geçerli bir Instagram linki girin.")
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
