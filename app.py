@@ -9,7 +9,7 @@ from io import BytesIO
 loader = instaloader.Instaloader()
 
 # Flask uygulaması
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
