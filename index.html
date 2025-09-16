@@ -3,502 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İnsan Resursları Otomasyonu - İş Axını</title>
+    <title>İnsan Resursları Otomasyonu Workflow</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --background-color: #ecf0f1;
-            --card-background: #ffffff;
-            --text-color: #34495e;
-            --success-color: #2ecc71;
-            --warning-color: #f39c12;
-            --danger-color: #e74c3c;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        header h1 {
-            color: var(--primary-color);
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 10px;
-        }
-
-        .workflow-section {
-            background-color: var(--card-background);
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px var(--shadow-color);
-            border-left: 5px solid var(--secondary-color);
-        }
-
-        .workflow-section h2 {
-            color: var(--primary-color);
-            margin-top: 0;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            font-size: 1.8em;
+            padding: 30px;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
-        
-        .workflow-section h2 svg {
-            margin-right: 10px;
-        }
 
-        .workflow-steps {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: flex-start;
-        }
-
-        .step {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
+        h1 {
+            color: #1a237e;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 150px;
-            position: relative;
-            box-shadow: 0 2px 5px var(--shadow-color);
+            margin-bottom: 20px;
         }
 
-        .step:not(:last-child)::after {
-            content: '→';
-            position: absolute;
-            right: -25px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: var(--secondary-color);
-            font-weight: bold;
+        .controls {
+            margin-bottom: 30px;
         }
 
-        .step.active {
-            border-color: var(--secondary-color);
-            background-color: #eaf5ff;
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
-        }
-        
-        .step.completed {
-            border-color: var(--success-color);
-            background-color: #e8f9f1;
-        }
-
-        .step-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-        
-        .step.completed .step-icon {
-            color: var(--success-color);
-        }
-
-        .step-title {
-            font-weight: 500;
-            font-size: 1.1em;
-            color: var(--primary-color);
-        }
-        
-        .step-content {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--card-background);
-            border-radius: 6px;
-            text-align: left;
-            border: 1px solid #eee;
-        }
-
-        .step.active .step-content {
-            display: block;
-        }
-        
-        .step-content p {
-            margin: 0 0 10px 0;
-            font-size: 0.95em;
-        }
-
-        .btn {
-            background-color: var(--secondary-color);
+        button {
+            background-color: #3f51b5;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.2s ease;
-            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .btn:hover {
-            background-color: #2980b9;
+        button:hover {
+            background-color: #1a237e;
+            transform: translateY(-2px);
         }
 
-        .btn-success { background-color: var(--success-color); }
-        .btn-success:hover { background-color: #27ae60; }
-
-        .btn-danger { background-color: var(--danger-color); }
-        .btn-danger:hover { background-color: #c0392b; }
-        
-        .btn-warning { background-color: var(--warning-color); color: #fff; }
-        .btn-warning:hover { background-color: #d35400; }
-        
-        .reset-button {
-            display: block;
-            margin: 20px auto 0;
-            width: 200px;
-            padding: 12px;
-            font-size: 1.1em;
-            font-weight: bold;
+        .workflow-container {
+            width: 100%;
+            max-width: 1400px;
+            overflow-x: auto;
+            padding: 20px 0;
         }
-        
-        .candidate, .employee, .request {
+
+        .workflow {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            margin-bottom: 8px;
-            background-color: #fdfdfd;
+            align-items: flex-start;
+            padding: 20px;
+            min-width: 1300px; /* Geniş məzmun üçün */
         }
-        
-        ul {
+
+        .stage {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin: 0 15px;
+            width: 300px;
+            flex-shrink: 0;
+            border-top: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stage:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .stage h2 {
+            margin-top: 0;
+            font-size: 1.3em;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        /* Stage specific colors */
+        #recruitment { border-color: #42A5F5; } /* Mavi */
+        #recruitment h2 { color: #1E88E5; }
+
+        #onboarding { border-color: #66BB6A; } /* Yaşıl */
+        #onboarding h2 { color: #43A047; }
+
+        #management { border-color: #FFA726; } /* Narıncı */
+        #management h2 { color: #FB8C00; }
+
+        #offboarding { border-color: #EF5350; } /* Qırmızı */
+        #offboarding h2 { color: #E53935; }
+
+
+        .process-list {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1200px) {
-            .step:not(:last-child)::after {
-                display: none;
-            }
-            .workflow-steps {
-                flex-direction: column;
-            }
-            .step {
-                width: 100%;
-                box-sizing: border-box;
-                margin-bottom: 25px;
-                position: relative;
-            }
-            .step:not(:last-child)::after {
-                display: block;
-                content: '↓';
-                right: 50%;
-                top: auto;
-                bottom: -25px;
-                transform: translateX(50%);
-            }
+        .process-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 5px solid #ccc;
+            opacity: 0.5;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.5s ease;
         }
         
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            header h1 {
-                font-size: 1.5em;
-            }
-            .workflow-section h2 {
-                font-size: 1.4em;
-            }
+        .process-item .icon {
+            margin-right: 12px;
+            font-size: 1.5em;
+            width: 30px;
+            text-align: center;
         }
+
+        .process-item.active {
+            opacity: 1;
+            transform: translateX(0);
+            background-color: #e3f2fd;
+            border-left-color: #42A5F5;
+        }
+
+        .process-item.completed {
+             opacity: 1;
+             transform: translateX(0);
+             background-color: #e8f5e9;
+             border-left-color: #66BB6A;
+        }
+        
+        .process-item.completed .icon::before {
+            content: '✓';
+            color: #43A047;
+            font-weight: bold;
+        }
+
+        .connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 60px;
+            align-self: center;
+            margin-top: 100px; /* Steplərin ortasına gətirmək üçün */
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 20px solid #bdbdbd;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+        }
+
+        .arrow.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>İnsan Resursları Otomasyonu - İş Axını (Prosesin Görünüşü)</h1>
-        </header>
+    <h1>İnsan Resursları (HR) Otomasyon Prosesi</h1>
+    <div class="controls">
+        <button id="startAnimationBtn">Animasiyanı Başlat</button>
+        <button id="resetAnimationBtn" style="background-color: #757575;">Sıfırla</button>
+    </div>
 
-        <section class="workflow-section" id="recruitment-section">
-            <h2>
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-                </svg>
-                1. İşə Qəbul Prosesi
-            </h2>
-            <div class="workflow-steps" data-workflow-id="recruitment">
-                <div class="step active" data-step="1">
-                    <div class="step-icon">📄</div>
-                    <div class="step-title">Vakansiya Yaradılması</div>
-                    <div class="step-content">
-                        <p>Yeni vakansiya üçün tələblər müəyyən edilir və elan hazırlanır.</p>
-                        <button class="btn btn-success" onclick="nextStep('recruitment', 1)">Prosesi Başlat</button>
-                    </div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-icon">📥</div>
-                    <div class="step-title">Müraciətlərin Qəbulu</div>
-                     <div class="step-content">
-                        <p>Namizədlər sistemə daxil olur:</p>
-                        <ul>
-                            <li class="candidate"><span>Ayan Məmmədova</span> <div><button class="btn btn-success btn-sm">Bax</button></div></li>
-                            <li class="candidate"><span>Elvin Ağayev</span> <div><button class="btn btn-success btn-sm">Bax</button></div></li>
-                        </ul>
-                        <button class="btn" onclick="nextStep('recruitment', 2)">Mərhələni Keç</button>
-                    </div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-icon">🧐</div>
-                    <div class="step-title">İlkin Dəyərləndirmə</div>
-                     <div class="step-content">
-                        <p>Müraciətlər ilkin tələblərə uyğunluq üçün yoxlanılır.</p>
-                         <ul>
-                            <li class="candidate">
-                                <span>Ayan Məmmədova</span>
-                                <div>
-                                    <button class="btn btn-success">Uyğundur</button>
-                                    <button class="btn btn-danger">Rədd et</button>
-                                </div>
-                            </li>
-                         </ul>
-                        <button class="btn" onclick="nextStep('recruitment', 3)">Növbəti</button>
-                    </div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-icon">📅</div>
-                    <div class="step-title">Müsahibə</div>
-                    <div class="step-content">
-                        <p>Uyğun namizədlərlə HR və texniki müsahibələr təşkil olunur.</p>
-                        <button class="btn btn-success" onclick="nextStep('recruitment', 4)">Müsahibə Bitdi</button>
-                    </div>
-                </div>
-                <div class="step" data-step="5">
-                    <div class="step-icon">✉️</div>
-                    <div class="step-title">İş Təklifi</div>
-                     <div class="step-content">
-                        <p>Uğurlu namizədə iş təklifi göndərilir.</p>
-                        <button class="btn btn-success" onclick="nextStep('recruitment', 5)">Təklif qəbul edildi</button>
-                         <button class="btn btn-danger" onclick="resetWorkflow('recruitment')">Təklif rədd edildi</button>
-                    </div>
-                </div>
-                <div class="step" data-step="6">
-                    <div class="step-icon">🎉</div>
-                    <div class="step-title">İşə Qəbul (Onboarding)</div>
-                     <div class="step-content">
-                        <p>Namizəd rəsmən işə qəbul edilir və adaptasiya prosesinə yönləndirilir.</p>
-                         <p><strong>Proses Tamamlandı!</strong></p>
-                    </div>
-                </div>
+    <div class="workflow-container">
+        <div class="workflow">
+            <div class="stage" id="recruitment">
+                <h2>1. İşə Qəbul</h2>
+                <ul class="process-list">
+                    <li class="process-item" data-step="1"><span class="icon">📄</span>Vakansiya yaradılması</li>
+                    <li class="process-item" data-step="2"><span class="icon">🔍</span>Namizədlərin axtarışı</li>
+                    <li class="process-item" data-step="3"><span class="icon">📥</span>Müraciətlərin seçimi</li>
+                    <li class="process-item" data-step="4"><span class="icon">📅</span>Müsahibələrin təşkili</li>
+                    <li class="process-item" data-step="5"><span class="icon">✉️</span>İş təklifinin göndərilməsi</li>
+                </ul>
             </div>
-             <button class="btn btn-danger reset-button" onclick="resetWorkflow('recruitment')">Prosesi Sıfırla</button>
-        </section>
 
-        <section class="workflow-section" id="management-section">
-            <h2>
-                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                </svg>
-                2. İşçilərin İdarə Edilməsi
-            </h2>
-             <div class="workflow-steps" data-workflow-id="management">
-                <div class="step active" data-step="1">
-                    <div class="step-icon">🚀</div>
-                    <div class="step-title">Adaptasiya (Onboarding)</div>
-                    <div class="step-content">
-                        <p>Yeni işçinin şirkətə uyğunlaşması üçün plan.</p>
-                         <button class="btn" onclick="nextStep('management', 1)">İşçilərin Siyahısı</button>
-                    </div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-icon">📈</div>
-                    <div class="step-title">Performans Dəyərləndirməsi</div>
-                    <div class="step-content">
-                        <p>İşçilərin rüblük/illik fəaliyyətinin qiymətləndirilməsi.</p>
-                        <ul>
-                            <li class="employee"><span>Leyla Quliyeva</span> <button class="btn btn-warning">Dəyərləndir</button></li>
-                        </ul>
-                        <button class="btn" onclick="nextStep('management', 2)">Növbəti</button>
-                    </div>
-                </div>
-                 <div class="step" data-step="3">
-                    <div class="step-icon">✈️</div>
-                    <div class="step-title">Məzuniyyət Sorğuları</div>
-                    <div class="step-content">
-                        <p>Gözləyən məzuniyyət sorğuları:</p>
-                        <ul>
-                           <li class="request">
-                               <span>Samir Vəliyev (5 gün)</span>
-                               <div><button class="btn btn-success">Təsdiq et</button><button class="btn btn-danger">Rədd et</button></div>
-                           </li>
-                        </ul>
-                         <button class="btn" onclick="nextStep('management', 3)">Növbəti</button>
-                    </div>
-                </div>
-                 <div class="step" data-step="4">
-                    <div class="step-icon">🎓</div>
-                    <div class="step-title">Təlim və İnkişaf</div>
-                    <div class="step-content">
-                        <p>İşçilərin peşəkar inkişafı üçün təlimlər təyin edilir.</p>
-                        <p><strong>Proses Davamlıdır</strong></p>
-                    </div>
-                </div>
-            </div>
-             <button class="btn btn-danger reset-button" onclick="resetWorkflow('management')">Prosesi Sıfırla</button>
-        </section>
-        
-        <section class="workflow-section" id="offboarding-section">
-            <h2>
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-dash-fill" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
-                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                </svg>
-                3. İşdən Çıxış Prosesi (Offboarding)
-            </h2>
-            <div class="workflow-steps" data-workflow-id="offboarding">
-                <div class="step active" data-step="1">
-                    <div class="step-icon">📝</div>
-                    <div class="step-title">İstefa Bildirişi</div>
-                    <div class="step-content">
-                        <p>İşçi işdən ayrılmaq barədə müraciət edir.</p>
-                        <button class="btn btn-warning" onclick="nextStep('offboarding', 1)">Prosesi Başlat</button>
-                    </div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-icon">🤝</div>
-                    <div class="step-title">Çıxış Müsahibəsi</div>
-                    <div class="step-content">
-                        <p>İşdən ayrılma səbəblərini anlamaq üçün HR ilə görüş təyin edilir.</p>
-                        <button class="btn" onclick="nextStep('offboarding', 2)">Müsahibə Bitdi</button>
-                    </div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-icon">💻</div>
-                    <div class="step-title">Avadanlıqların Təhvili</div>
-                     <div class="step-content">
-                        <p>Şirkətə aid notbuk, telefon və digər avadanlıqlar təhvil alınır.</p>
-                        <button class="btn" onclick="nextStep('offboarding', 3)">Təsdiq Et</button>
-                    </div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-icon">💰</div>
-                    <div class="step-title">Son Hesablaşma</div>
-                     <div class="step-content">
-                        <p>Son əmək haqqı və kompensasiyalar hesablanır və ödənilir.</p>
-                        <button class="btn" onclick="nextStep('offboarding', 4)">Ödənildi</button>
-                    </div>
-                </div>
-                <div class="step" data-step="5">
-                    <div class="step-icon">✅</div>
-                    <div class="step-title">Prosesin Tamamlanması</div>
-                     <div class="step-content">
-                        <p>İşçinin sistemlərdən çıxarılması və sənədləşmənin tamamlanması.</p>
-                        <p><strong>Proses Tamamlandı!</strong></p>
-                    </div>
-                </div>
-            </div>
-            <button class="btn btn-danger reset-button" onclick="resetWorkflow('offboarding')">Prosesi Sıfırla</button>
-        </section>
+            <div class="connector"><div class="arrow" id="arrow1"></div></div>
 
+            <div class="stage" id="onboarding">
+                <h2>2. İşə Başlama</h2>
+                <ul class="process-list">
+                    <li class="process-item" data-step="6"><span class="icon">📝</span>Sənədləşmənin avtomatlaşdırılması</li>
+                    <li class="process-item" data-step="7"><span class="icon">💻</span>Avadanlıq və girişlərin verilməsi</li>
+                    <li class="process-item" data-step="8"><span class="icon">🤝</span>Adaptasiya proqramının təyini</li>
+                    <li class="process-item" data-step="9"><span class="icon">📚</span>İlkin təlimlərin təşkili</li>
+                </ul>
+            </div>
+
+            <div class="connector"><div class="arrow" id="arrow2"></div></div>
+
+            <div class="stage" id="management">
+                <h2>3. İşçi Yönetimi</h2>
+                <ul class="process-list">
+                    <li class="process-item" data-step="10"><span class="icon">⏰</span>Davamiyyətin izlənməsi</li>
+                    <li class="process-item" data-step="11"><span class="icon">🌴</span>Məzuniyyət sorğularının idarəsi</li>
+                    <li class="process-item" data-step="12"><span class="icon">📈</span>Performansın qiymətləndirilməsi</li>
+                    <li class="process-item" data-step="13"><span class="icon">💵</span>Əmək haqqı hesablanması</li>
+                </ul>
+            </div>
+
+            <div class="connector"><div class="arrow" id="arrow3"></div></div>
+
+            <div class="stage" id="offboarding">
+                <h2>4. İşdən Çıxış</h2>
+                <ul class="process-list">
+                    <li class="process-item" data-step="14"><span class="icon">🚪</span>Çıxış sorğusunun qəbulu</li>
+                    <li class="process-item" data-step="15"><span class="icon">💬</span>"Exit" müsahibəsinin təşkili</li>
+                    <li class="process-item" data-step="16"><span class="icon">🔑</span>Girişlərin və avadanlıqların ləğvi</li>
+                    <li class="process-item" data-step="17"><span class="icon">💰</span>Son hesablaşmanın aparılması</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script>
-        // DOM-dakı bütün workflow addımlarını əldə et
-        const allSteps = document.querySelectorAll('.step');
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('startAnimationBtn');
+            const resetBtn = document.getElementById('resetAnimationBtn');
+            const processItems = document.querySelectorAll('.process-item');
+            const arrows = document.querySelectorAll('.arrow');
+            let animationTimeout;
 
-        // Hər bir addıma klik hadisəsi əlavə et
-        allSteps.forEach(step => {
-            step.addEventListener('click', (e) => {
-                // Əgər kliklənən element düymə deyilsə, addımı aktiv et
-                if (!e.target.matches('button')) {
-                    const workflowId = step.closest('.workflow-steps').dataset.workflowId;
-                    const stepNumber = parseInt(step.dataset.step);
-                    setActiveStep(workflowId, stepNumber);
+            function resetAll() {
+                clearTimeout(animationTimeout);
+                processItems.forEach(item => {
+                    item.classList.remove('active', 'completed');
+                    // Reset icon
+                    const iconSpan = item.querySelector('.icon');
+                    if (iconSpan.dataset.originalIcon) {
+                        iconSpan.innerHTML = iconSpan.dataset.originalIcon;
+                    }
+                });
+                arrows.forEach(arrow => arrow.classList.remove('active'));
+                startBtn.disabled = false;
+            }
+
+            function startAnimation() {
+                resetAll();
+                startBtn.disabled = true;
+                let delay = 500;
+                let currentStep = 1;
+                const totalSteps = processItems.length;
+
+                // Store original icons
+                processItems.forEach(item => {
+                     const iconSpan = item.querySelector('.icon');
+                     iconSpan.dataset.originalIcon = iconSpan.innerHTML;
+                });
+
+                function animateStep() {
+                    if (currentStep > totalSteps) {
+                        startBtn.disabled = false;
+                        return;
+                    }
+
+                    const currentItem = document.querySelector(`.process-item[data-step="${currentStep}"]`);
+                    const previousItem = document.querySelector(`.process-item[data-step="${currentStep - 1}"]`);
+
+                    if (previousItem) {
+                        previousItem.classList.remove('active');
+                        previousItem.classList.add('completed');
+                    }
+                    
+                    if(currentItem){
+                        currentItem.classList.add('active');
+
+                        // Activate arrow when moving to a new stage
+                        if (currentItem.dataset.step === '6') {
+                            document.getElementById('arrow1').classList.add('active');
+                        } else if (currentItem.dataset.step === '10') {
+                            document.getElementById('arrow2').classList.add('active');
+                        } else if (currentItem.dataset.step === '14') {
+                             document.getElementById('arrow3').classList.add('active');
+                        }
+                    }
+
+                    currentStep++;
+                    animationTimeout = setTimeout(animateStep, delay);
                 }
-            });
+
+                animateStep();
+            }
+
+            startBtn.addEventListener('click', startAnimation);
+            resetBtn.addEventListener('click', resetAll);
         });
-
-        /**
-         * Müəyyən bir iş axınında addımı aktiv edən funksiya
-         * @param {string} workflowId - İş axınının ID-si (recruitment, management, offboarding)
-         * @param {number} stepNumber - Aktiv ediləcək addımın nömrəsi
-         */
-        function setActiveStep(workflowId, stepNumber) {
-            const workflowContainer = document.querySelector(`.workflow-steps[data-workflow-id="${workflowId}"]`);
-            if (!workflowContainer) return;
-
-            const steps = workflowContainer.querySelectorAll('.step');
-            
-            steps.forEach(s => {
-                const currentStepNumber = parseInt(s.dataset.step);
-                s.classList.remove('active');
-                
-                // Aktiv addımdan əvvəlki addımları "tamamlanmış" olaraq işarələ
-                if (currentStepNumber < stepNumber) {
-                    s.classList.add('completed');
-                } else {
-                    s.classList.remove('completed');
-                }
-            });
-
-            const newActiveStep = workflowContainer.querySelector(`.step[data-step="${stepNumber}"]`);
-            if (newActiveStep) {
-                newActiveStep.classList.add('active');
-                newActiveStep.classList.remove('completed');
-            }
-        }
-        
-        /**
-         * Növbəti addıma keçid funksiyası
-         * @param {string} workflowId - İş axınının ID-si
-         * @param {number} currentStepNumber - Cari addımın nömrəsi
-         */
-        function nextStep(workflowId, currentStepNumber) {
-            const workflowContainer = document.querySelector(`.workflow-steps[data-workflow-id="${workflowId}"]`);
-            const totalSteps = workflowContainer.querySelectorAll('.step').length;
-            
-            const nextStepNumber = currentStepNumber + 1;
-
-            if (nextStepNumber <= totalSteps) {
-                setActiveStep(workflowId, nextStepNumber);
-            } else {
-                // Son addımdırsa, bütün addımları tamamlanmış et
-                 const steps = workflowContainer.querySelectorAll('.step');
-                 steps.forEach(s => s.classList.add('completed'));
-                 steps[steps.length - 1].classList.add('active'); // Sonuncunu aktiv saxla
-            }
-        }
-
-        /**
-         * İş axınını ilkin vəziyyətinə qaytaran funksiya
-         * @param {string} workflowId - Sıfırlanacaq iş axınının ID-si
-         */
-        function resetWorkflow(workflowId) {
-            setActiveStep(workflowId, 1);
-        }
-
     </script>
-
 </body>
 </html>
