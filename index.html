@@ -3,307 +3,363 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İnsan Resursları Otomasyonu Workflow</title>
+    <title>Ətraflı HR Otomasyon Prosesi</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --c-recruitment: #2979ff;
+            --c-onboarding: #00c853;
+            --c-management: #ff9100;
+            --c-offboarding: #d50000;
+            --c-background: #f4f7f9;
+            --c-text: #333;
+            --c-card-bg: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--c-background);
+            color: var(--c-text);
             margin: 0;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 2rem;
         }
 
-        h1 {
-            color: #1a237e;
+        .main-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
         }
 
+        .main-header h1 {
+            font-size: 2.5rem;
+            color: #1c3d5a;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-header p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
         .controls {
-            margin-bottom: 30px;
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
-        button {
-            background-color: #3f51b5;
+        .btn {
+            background-color: #1c3d5a;
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 0 10px;
         }
 
-        button:hover {
-            background-color: #1a237e;
+        .btn:hover {
+            background-color: #3f51b5;
             transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
-        .workflow-container {
+        .btn-reset {
+            background-color: #6c757d;
+        }
+        .btn-reset:hover {
+            background-color: #5a6268;
+        }
+
+        .workflow-wrapper {
             width: 100%;
-            max-width: 1400px;
-            overflow-x: auto;
-            padding: 20px 0;
-        }
-
-        .workflow {
-            display: flex;
-            align-items: flex-start;
-            padding: 20px;
-            min-width: 1300px; /* Geniş məzmun üçün */
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .stage {
-            background-color: white;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: var(--c-card-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin: 0 15px;
-            width: 300px;
-            flex-shrink: 0;
-            border-top: 5px solid;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .stage:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .stage h2 {
-            margin-top: 0;
-            font-size: 1.3em;
-            text-align: center;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
-        }
-
-        /* Stage specific colors */
-        #recruitment { border-color: #42A5F5; } /* Mavi */
-        #recruitment h2 { color: #1E88E5; }
-
-        #onboarding { border-color: #66BB6A; } /* Yaşıl */
-        #onboarding h2 { color: #43A047; }
-
-        #management { border-color: #FFA726; } /* Narıncı */
-        #management h2 { color: #FB8C00; }
-
-        #offboarding { border-color: #EF5350; } /* Qırmızı */
-        #offboarding h2 { color: #E53935; }
-
-
-        .process-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .process-item {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border-left: 5px solid #ccc;
-            opacity: 0.5;
-            transform: translateX(-20px);
-            transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.5s ease;
+            box-shadow: var(--shadow);
+            border-left: 7px solid;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         
-        .process-item .icon {
-            margin-right: 12px;
-            font-size: 1.5em;
-            width: 30px;
-            text-align: center;
+        .stage.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .process-item.active {
+        .stage-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stage-header .icon {
+            font-size: 2.5rem;
+            margin-right: 1rem;
+        }
+
+        .stage-header h2 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        /* Stage Colors */
+        #recruitment { border-color: var(--c-recruitment); }
+        #recruitment .stage-header h2 { color: var(--c-recruitment); }
+
+        #onboarding { border-color: var(--c-onboarding); }
+        #onboarding .stage-header h2 { color: var(--c-onboarding); }
+
+        #management { border-color: var(--c-management); }
+        #management .stage-header h2 { color: var(--c-management); }
+        
+        #offboarding { border-color: var(--c-offboarding); }
+        #offboarding .stage-header h2 { color: var(--c-offboarding); }
+
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            bottom: 5px;
+            width: 3px;
+            background-color: #e0e0e0;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .stage.visible .timeline::before {
+            transform: scaleY(1);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .timeline-item.visible {
             opacity: 1;
             transform: translateX(0);
-            background-color: #e3f2fd;
-            border-left-color: #42A5F5;
         }
 
-        .process-item.completed {
-             opacity: 1;
-             transform: translateX(0);
-             background-color: #e8f5e9;
-             border-left-color: #66BB6A;
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #ccc;
+            border: 3px solid var(--c-background);
+            transition: background-color 0.4s ease;
         }
         
-        .process-item.completed .icon::before {
-            content: '✓';
-            color: #43A047;
-            font-weight: bold;
+        .timeline-item.visible::before {
+             background-color: var(--stage-color, #ccc);
         }
 
-        .connector {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            width: 60px;
-            align-self: center;
-            margin-top: 100px; /* Steplərin ortasına gətirmək üçün */
+        .timeline-item:last-child {
+            margin-bottom: 0;
         }
 
-        .arrow {
-            width: 0;
-            height: 0;
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            border-left: 20px solid #bdbdbd;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+        .timeline-item h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--text-color, #333);
         }
 
-        .arrow.active {
-            opacity: 1;
-            transform: scale(1);
+        .timeline-item p {
+            margin: 0;
+            line-height: 1.6;
+            color: #666;
         }
-
+        
+        /* Set color variables for items */
+        #recruitment .timeline-item { --stage-color: var(--c-recruitment); --text-color: var(--c-recruitment); }
+        #onboarding .timeline-item { --stage-color: var(--c-onboarding); --text-color: var(--c-onboarding); }
+        #management .timeline-item { --stage-color: var(--c-management); --text-color: var(--c-management); }
+        #offboarding .timeline-item { --stage-color: var(--c-offboarding); --text-color: var(--c-offboarding); }
     </style>
 </head>
 <body>
 
-    <h1>İnsan Resursları (HR) Otomasyon Prosesi</h1>
+    <header class="main-header">
+        <h1>İnsan Resursları (HR) Otomasyon Prosesinin Axışı</h1>
+        <p>Bütün işçi həyat dövrünü əhatə edən otomasyon proseslərinin detallı və mərhələli izahı. Prosesin necə işlədiyini görmək üçün animasiyanı başladın.</p>
+    </header>
+
     <div class="controls">
-        <button id="startAnimationBtn">Animasiyanı Başlat</button>
-        <button id="resetAnimationBtn" style="background-color: #757575;">Sıfırla</button>
+        <button class="btn" id="startAnimationBtn">Animasiyanı Başlat</button>
+        <button class="btn btn-reset" id="resetAnimationBtn">Sıfırla</button>
     </div>
 
-    <div class="workflow-container">
-        <div class="workflow">
-            <div class="stage" id="recruitment">
-                <h2>1. İşə Qəbul</h2>
-                <ul class="process-list">
-                    <li class="process-item" data-step="1"><span class="icon">📄</span>Vakansiya yaradılması</li>
-                    <li class="process-item" data-step="2"><span class="icon">🔍</span>Namizədlərin axtarışı</li>
-                    <li class="process-item" data-step="3"><span class="icon">📥</span>Müraciətlərin seçimi</li>
-                    <li class="process-item" data-step="4"><span class="icon">📅</span>Müsahibələrin təşkili</li>
-                    <li class="process-item" data-step="5"><span class="icon">✉️</span>İş təklifinin göndərilməsi</li>
-                </ul>
+    <div class="workflow-wrapper">
+
+        <section class="stage" id="recruitment">
+            <div class="stage-header">
+                <span class="icon">🚀</span>
+                <h2>Mərhələ 1: İşə Qəbul</h2>
             </div>
-
-            <div class="connector"><div class="arrow" id="arrow1"></div></div>
-
-            <div class="stage" id="onboarding">
-                <h2>2. İşə Başlama</h2>
-                <ul class="process-list">
-                    <li class="process-item" data-step="6"><span class="icon">📝</span>Sənədləşmənin avtomatlaşdırılması</li>
-                    <li class="process-item" data-step="7"><span class="icon">💻</span>Avadanlıq və girişlərin verilməsi</li>
-                    <li class="process-item" data-step="8"><span class="icon">🤝</span>Adaptasiya proqramının təyini</li>
-                    <li class="process-item" data-step="9"><span class="icon">📚</span>İlkin təlimlərin təşkili</li>
-                </ul>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Vakansiyanın Yaradılması və Təsdiqi</h3>
+                    <p>Menecerlər sistemdə standart formanı dolduraraq yeni vakansiya üçün sorğu yaradır. Sorğu avtomatik olaraq təsdiq zənciri (rəhbər, HR, maliyyə) üzrə yönləndirilir və təsdiqləndikdən sonra aktivləşir.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2. CV-lərin Toplanması və Süzgəcdən Keçirilməsi (Screening)</h3>
+                    <p>Vakansiya eyni anda bir neçə iş portalında və şirkətin karyera səhifəsində yayımlanır. Gələn bütün CV-lər vahid bazaya toplanır, sistem açar sözlər (məsələn, "Java", "5 il təcrübə") əsasında namizədləri avtomatik olaraq sıralayır.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>3. Müsahibələrin Avtomatik Planlanması</h3>
+                    <p>HR mütəxəssisi uyğun namizədləri seçir və sistemə müsahibə üçün vaxt aralıqlarını daxil edir. Sistem həm namizədin, həm də müsahibəçinin təqvimi ilə inteqrasiya olaraq ən uyğun vaxtı təklif edir, təsdiqlənən kimi hər kəsə avtomatik bildiriş və dəvət göndərir.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>4. Təklif Məktubunun Hazırlanması və Göndərilməsi</h3>
+                    <p>Müsahibələri uğurla keçən namizəd üçün sistemdə təsdiqlənmiş şablonlar əsasında avtomatik olaraq iş təklifi (offer letter) hazırlanır. Rəqəmsal imza üçün göndərilir və namizəd təklifi onlayn qəbul edə bilir.</p>
+                </div>
             </div>
+        </section>
 
-            <div class="connector"><div class="arrow" id="arrow2"></div></div>
-
-            <div class="stage" id="management">
-                <h2>3. İşçi Yönetimi</h2>
-                <ul class="process-list">
-                    <li class="process-item" data-step="10"><span class="icon">⏰</span>Davamiyyətin izlənməsi</li>
-                    <li class="process-item" data-step="11"><span class="icon">🌴</span>Məzuniyyət sorğularının idarəsi</li>
-                    <li class="process-item" data-step="12"><span class="icon">📈</span>Performansın qiymətləndirilməsi</li>
-                    <li class="process-item" data-step="13"><span class="icon">💵</span>Əmək haqqı hesablanması</li>
-                </ul>
+        <section class="stage" id="onboarding">
+            <div class="stage-header">
+                <span class="icon">👋</span>
+                <h2>Mərhələ 2: Yeni İşçinin Adaptasiyası</h2>
             </div>
-
-            <div class="connector"><div class="arrow" id="arrow3"></div></div>
-
-            <div class="stage" id="offboarding">
-                <h2>4. İşdən Çıxış</h2>
-                <ul class="process-list">
-                    <li class="process-item" data-step="14"><span class="icon">🚪</span>Çıxış sorğusunun qəbulu</li>
-                    <li class="process-item" data-step="15"><span class="icon">💬</span>"Exit" müsahibəsinin təşkili</li>
-                    <li class="process-item" data-step="16"><span class="icon">🔑</span>Girişlərin və avadanlıqların ləğvi</li>
-                    <li class="process-item" data-step="17"><span class="icon">💰</span>Son hesablaşmanın aparılması</li>
-                </ul>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Sənədləşmənin Rəqəmsallaşdırılması</h3>
+                    <p>İşçi işə başlamazdan əvvəl tələb olunan bütün sənədləri (şəxsiyyət vəsiqəsi, diplom və s.) onlayn portala yükləyir. Əmək müqaviləsi avtomatik hazırlanır və elektron imza üçün işçiyə göndərilir. Bütün proses kağızsız aparılır.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2. Avadanlıq və Sistem Girişlərinin Hazırlanması</h3>
+                    <p>İşçi təklifi qəbul etdiyi an İT və inzibati şöbələrə avtomatik tapşırıq (task) gedir: noutbuk hazırlanması, e-mail ünvanının açılması, lazımi proqramlara giriş hüquqlarının verilməsi və s.</p>
+                </div>
+                 <div class="timeline-item">
+                    <h3>3. Adaptasiya Proqramının Başladılması</h3>
+                    <p>İşçinin ilk həftə üçün planı sistem tərəfindən avtomatik təyin olunur: tanışlıq görüşləri, şirkət təlimləri, mentor təyinatı və s. İşçiyə və onun rəhbərinə mütəmadi olaraq bildirişlər və xatırlatmalar göndərilir.</p>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <section class="stage" id="management">
+            <div class="stage-header">
+                <span class="icon">⚙️</span>
+                <h2>Mərhələ 3: İşçinin İdarə Edilməsi</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Məzuniyyət və Davamiyyətin İdarə Edilməsi</h3>
+                    <p>İşçilər mobil proqram və ya veb portal vasitəsilə məzuniyyət, icazə və ya xəstəlik vərəqəsi üçün sorğu göndərir. Sorğular rəhbərə avtomatik yönləndirilir və təsdiqləndikdən sonra sistemdəki qalıq məzuniyyət günləri dərhal yenilənir.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2. Performansın Qiymətləndirilməsi</h3>
+                    <p>Sistem rüblük və ya illik performans dəyərləndirməsi üçün rəhbərlərə və işçilərə avtomatik xatırlatmalar göndərir. Məqsədlərin (KPI) izlənməsi, rəylərin toplanması və nəticələrin analizi vahid platformada aparılır.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>3. Əmək Haqqının Avtomatik Hesablanması</h3>
+                    <p>Ayın sonunda sistem işçilərin davamiyyətini, bonuslarını, vergiləri və digər kəsintiləri nəzərə alaraq əmək haqqını avtomatik hesablayır. Hazır hesabatlar mühasibatlığa və banka ötürülür.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="stage" id="offboarding">
+            <div class="stage-header">
+                <span class="icon">🚪</span>
+                <h2>Mərhələ 4: İşdən Çıxış Prosesi</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Çıxış Sorğusu və Rəsmiləşdirmə</h3>
+                    <p>İşçi sistem üzərindən işdən çıxma ərizəsini təqdim edir. Proses avtomatik olaraq HR şöbəsinə və rəhbərə yönləndirilir. Son iş günü və digər detallar sistemdə qeyd olunur.</p>
+                </div>
+                 <div class="timeline-item">
+                    <h3>2. "Checklist"in İdarə Edilməsi</h3>
+                    <p>Sistem bütün əlaqəli şöbələrə (İT, mühasibatlıq, inzibati) avtomatik tapşırıqlar göndərir: avadanlıqların təhvil alınması, sistem girişlərinin ləğvi, son hesablaşmanın aparılması. Hər tapşırığın icrası izlənilir.</p>
+                </div>
+                 <div class="timeline-item">
+                    <h3>3. "Exit" Müsahibəsi və Məlumatların Toplanması</h3>
+                    <p>Sistem işçiyə anonim "exit" sorğusu göndərir və ya HR ilə onlayn müsahibə planlayır. Toplanan məlumatlar şirkətdəki prosesləri yaxşılaşdırmaq üçün təhlil edilir və saxlanılır.</p>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const startBtn = document.getElementById('startAnimationBtn');
             const resetBtn = document.getElementById('resetAnimationBtn');
-            const processItems = document.querySelectorAll('.process-item');
-            const arrows = document.querySelectorAll('.arrow');
+            const stages = document.querySelectorAll('.stage');
             let animationTimeout;
 
-            function resetAll() {
+            function resetAnimation() {
                 clearTimeout(animationTimeout);
-                processItems.forEach(item => {
-                    item.classList.remove('active', 'completed');
-                    // Reset icon
-                    const iconSpan = item.querySelector('.icon');
-                    if (iconSpan.dataset.originalIcon) {
-                        iconSpan.innerHTML = iconSpan.dataset.originalIcon;
-                    }
+                stages.forEach(stage => {
+                    stage.classList.remove('visible');
+                    const items = stage.querySelectorAll('.timeline-item');
+                    items.forEach(item => item.classList.remove('visible'));
                 });
-                arrows.forEach(arrow => arrow.classList.remove('active'));
                 startBtn.disabled = false;
             }
 
             function startAnimation() {
-                resetAll();
+                resetAnimation();
                 startBtn.disabled = true;
-                let delay = 500;
-                let currentStep = 1;
-                const totalSteps = processItems.length;
 
-                // Store original icons
-                processItems.forEach(item => {
-                     const iconSpan = item.querySelector('.icon');
-                     iconSpan.dataset.originalIcon = iconSpan.innerHTML;
+                const elementsToShow = [];
+                stages.forEach(stage => {
+                    elementsToShow.push(stage);
+                    const items = stage.querySelectorAll('.timeline-item');
+                    items.forEach(item => elementsToShow.push(item));
                 });
-
-                function animateStep() {
-                    if (currentStep > totalSteps) {
+                
+                let i = 0;
+                function showNext() {
+                    if (i < elementsToShow.length) {
+                        elementsToShow[i].classList.add('visible');
+                        i++;
+                        // Add a slightly longer pause between main stages
+                        const delay = elementsToShow[i-1].classList.contains('stage') ? 500 : 350;
+                        animationTimeout = setTimeout(showNext, delay);
+                    } else {
                         startBtn.disabled = false;
-                        return;
                     }
-
-                    const currentItem = document.querySelector(`.process-item[data-step="${currentStep}"]`);
-                    const previousItem = document.querySelector(`.process-item[data-step="${currentStep - 1}"]`);
-
-                    if (previousItem) {
-                        previousItem.classList.remove('active');
-                        previousItem.classList.add('completed');
-                    }
-                    
-                    if(currentItem){
-                        currentItem.classList.add('active');
-
-                        // Activate arrow when moving to a new stage
-                        if (currentItem.dataset.step === '6') {
-                            document.getElementById('arrow1').classList.add('active');
-                        } else if (currentItem.dataset.step === '10') {
-                            document.getElementById('arrow2').classList.add('active');
-                        } else if (currentItem.dataset.step === '14') {
-                             document.getElementById('arrow3').classList.add('active');
-                        }
-                    }
-
-                    currentStep++;
-                    animationTimeout = setTimeout(animateStep, delay);
                 }
-
-                animateStep();
+                
+                showNext();
             }
 
             startBtn.addEventListener('click', startAnimation);
-            resetBtn.addEventListener('click', resetAll);
+            resetBtn.addEventListener('click', resetAnimation);
         });
     </script>
+
 </body>
 </html>
